@@ -32,6 +32,17 @@ export async function PATCH(req: Request, {params}: contextType) {
 export async function DELETE(req: Request, {params}: contextType) {
     const index = comments.findIndex(comment => comment.id === parseInt(params.id))
     const deletedComment = comments[index]
+
+    if (!deletedComment) {
+        return new Response("comment not found", { status: 404 })
+    }
+
     comments.splice(index, 1)
-    return Response.json(deletedComment)
+    return new Response(
+        JSON.stringify(deletedComment),
+        {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+        }
+    )
 }

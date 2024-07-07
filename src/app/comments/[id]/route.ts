@@ -1,5 +1,6 @@
 import { log } from "console"
 import { comments } from "../data"
+import { redirect } from "next/navigation"
 
 type contextType = {
     params: { id: string }
@@ -12,7 +13,7 @@ export async function GET(
     const comment = comments.find(comment => comment.id === parseInt(params.id))
 
     if (!comment) {
-        return new Response("Not found", { status: 404 })
+        redirect('/');
     }
 
     return Response.json(comment)
